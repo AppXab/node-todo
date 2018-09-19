@@ -16,7 +16,7 @@ var app = express();
 
 app.use(bodyParser.json());
 
-app.post('/todos', (req, res) => {
+app.post('/todos', (req, res) => { //todos is collection name
 
   //console.log(req.body);
   var todo = new Todo({
