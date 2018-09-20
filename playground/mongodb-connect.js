@@ -1,11 +1,14 @@
-const MongoClient = require('mongodb').MongoClient;
+// const MongoClient = require('mongodb').MongoClient;
 
 // //es-6 destructuring
 // var user={name:'ab',age:55};
 // var {name}=user;
 // console.log(name); 
 ////lets  convert above const //generate obj ids
-// const {MongoClient,ObjectID}=require('mongodb');
+const {
+  MongoClient,
+  ObjectID
+} = require('mongodb');
 // var obj=new ObjectID();//it will generate an unique key each time we can use it as objectId
 // console.log(obj);
 
