@@ -1,9 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 
-const {
-  ObjectID
-} = require('mongodb')
+const {  ObjectID} = require('mongodb');
 var {
   mongoose
 } = require('./db/mongoose');

@@ -1,5 +1,8 @@
 const expect = require('expect');
 const request = require('supertest');
+const {
+  ObjectID
+} = require('mongodb');
 
 const {
   app
@@ -9,11 +12,15 @@ const {
 } = require('./../models/todo');
 
 
+//check parameters
 const todos = [{
+  _id: new ObjectID(),
   text: 'test todo text'
 }, {
+  _id: new ObjectID(),
   text: 'second test todo'
 }];
+
 
 beforeEach((done) => {
   Todo.remove({}).then(() => {
@@ -21,7 +28,7 @@ beforeEach((done) => {
   }).then(() => done());
 });
 
-
+//for post req
 describe('POST/todos', () => {
   it('should create new todo', (done) => {
     var text = "test todo text";
@@ -63,6 +70,8 @@ describe('POST/todos', () => {
   })
 })
 
+//to check api,for get req
+//to check this run 'npm run test-watch' 
 describe('GET/todos', () => {
   it('should get all todos', (done) => {
     request(app)
@@ -73,4 +82,35 @@ describe('GET/todos', () => {
       })
       .end(done);
   })
+})
+
+//for api test case,we pass id here as input
+//to check this run 'npm run test-watch'
+describe('GET/todos/:id', () => {
+  it('should get  todos doc', (done) => {
+    request(app)
+      .get(`/todos/${todos[0]._id.toHexString()}`) //backtick
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.todo.text).toBe(todos[0].text);
+      })
+      .end(done);
+  });
+
+  it('should return 404 if todo not found', (done) => {
+    var hexId = new ObjectID().toHexString();
+    request(app)
+      .get(`/todos/${hexId}`) //backtick
+      .expect(400)
+      .end(done)
+
+  });
+  it('should return 400 for non object ids', (done) => {
+    request(app)
+      .get('/todos/123abc') //backtick
+      .expect(400)
+      .end(done)
+  });
+
+
 })
