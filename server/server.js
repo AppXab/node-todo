@@ -65,12 +65,26 @@ app.get('/todos/:id', (req, res) => {
   }).catch((e) => {
     res.status(400).send();
   })
-
-
 });
 
 
+app.delete('/todos/:id', (req, res) => {
+  var id = req.params.id;
+  if (!ObjectID.isValid(id)) {
+    return res.status(400).send();
+  }
 
+  Todo.findByIdAndRemove(id).then((todo) => { //nothing is depend on this Users we can write any thing here
+    if (!todo) {
+      return res.status(400).send();
+    }
+    res.send({
+      todo
+    });
+  }).catch((e) => {
+    res.status(400).send();
+  })
+});
 
 
 
