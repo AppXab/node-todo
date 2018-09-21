@@ -1,15 +1,9 @@
 const expect = require('expect');
 const request = require('supertest');
-const {
-  ObjectID
-} = require('mongodb');
+const {  ObjectID} = require('mongodb');
 
-const {
-  app
-} = require('./../server');
-const {
-  Todo
-} = require('./../models/todo');
+const {  app} = require('./../server');
+const {  Todo} = require('./../models/todo');
 
 
 //check parameters
@@ -33,7 +27,7 @@ beforeEach((done) => {
 //for post req
 describe('POST/todos', () => {
   it('should create new todo', (done) => {
-    var text = "test todo text";
+    var text = "test dftodo text";
     request(app)
       .post('/todos')
       .send({
