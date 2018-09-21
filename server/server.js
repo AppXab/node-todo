@@ -1,27 +1,25 @@
-var env=process.env.NODE_ENV||'development';//for environment setup to development or testing
-console.log("env*****"+env);
-if (env='development') {
-  process.env.PORT=3000;
-  process.env.MONGODB_URI='mongodb://localhost:27017/myproject';
-} else if(env='test') {
-  process.env.PORT=3000;
-  process.env.MONGODB_URI='mongodb://localhost:27017/myprojectTest';
-}
+// require('./config/config');
 
 //library require
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
-const {  ObjectID} = require('mongodb');
+const {
+  ObjectID
+} = require('mongodb');
 
 //local require
 // var {  mongoose} = require('./db/mongoose');
-var {  Todo} = require('./models/todo');
-var {  User} = require('./models/user');
+var {
+  Todo
+} = require('./models/todo');
+var {
+  User
+} = require('./models/user');
 
 
 var app = express();
-const port = process.env.PORT //for deployment it uses avail port or port 3000
+const port = process.env.PORT||3000 //for deployment it uses avail port or port 3000
 
 app.use(bodyParser.json());
 
@@ -99,7 +97,7 @@ app.patch('/todos/:id', (req, res) => {
     return res.status(404).send();
   }
   if (_.isBoolean(body.completed) && body.completed) {
-    body.completedAt= new Date().getTime();
+    body.completedAt = new Date().getTime();
   } else {
     body.completed = false;
     body.completedAt = null;

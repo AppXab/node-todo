@@ -13,8 +13,8 @@ const todos = [{
 }, {
   _id: new ObjectID(),
   text: 'this is new text',
-  completed: true,
-  completedAt: '333'
+  // completed: true,
+  // completedAt: '333'
 }];
 
 
@@ -23,6 +23,10 @@ beforeEach((done) => {
     return Todo.insertMany(todos)
   }).then(() => done());
 });
+
+// beforeEach((done)=>{
+//   Todo.remove({}).then(()=>done());
+// });
 
 //for post req
 describe('POST/todos', () => {
@@ -42,7 +46,7 @@ describe('POST/todos', () => {
           return done(err);
         }
         Todo.find().then((todos) => {
-          expect(todos.length).toBe(3);
+          expect(todos.length).toBe(1);//3
           expect(todos[0].text).toBe(text);
           done();
         }).catch((e) => done(e));
