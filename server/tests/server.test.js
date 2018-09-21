@@ -31,7 +31,7 @@ beforeEach((done) => {
 //for post req
 describe('POST/todos', () => {
   it('should create new todo', (done) => {
-    var text = "test dftodo text";
+    var text = "test todo text";
     request(app)
       .post('/todos')
       .send({
@@ -46,7 +46,7 @@ describe('POST/todos', () => {
           return done(err);
         }
         Todo.find().then((todos) => {
-          expect(todos.length).toBe(1);//3
+          expect(todos.length).toBe(3);//3
           expect(todos[0].text).toBe(text);
           done();
         }).catch((e) => done(e));
