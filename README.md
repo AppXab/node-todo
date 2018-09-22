@@ -12,3 +12,8 @@ npm test to run test db  and check test log
 
 
 in postman we can easily change environment between local and server(from upper right corner)
+
+
+//security and authentication 
+add user with validations
+npm i validator --save 
