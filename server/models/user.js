@@ -43,11 +43,11 @@ var UserSchema = new mongoose.Schema({
 
 
 //to shown only id and email in response instead of all confidential data
-UserSchema.methods.toJSON=function(){
-  var user=this;
-  var userObject=user.toObject();
+UserSchema.methods.toJSON = function () {
+  var user = this;
+  var userObject = user.toObject();
 
-  return _.pick(userObject,['_id','email']);
+  return _.pick(userObject, ['_id', 'email']);
 }
 
 
@@ -69,6 +69,24 @@ UserSchema.methods.generateAuthToken = function () {
     return token;
   });
 };
+
+//private route and auth middleware   
+UserSchema.statics.findByToken = function (token) {
+  var User = this;
+  var decoded;
+
+  try {
+    decoded = jwt.verify(token, 'abcd123');
+  } catch (e) {
+    return Promise.reject();
+  }
+  return User.findOne({
+    '_id': decoded._id,
+    'tokens.token': token,
+    'tokens.access': 'auth'
+  });
+};
+
 
 
 
