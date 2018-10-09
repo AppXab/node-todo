@@ -1,44 +1,38 @@
-const {
-  MongoClient,
-  ObjectID
-} = require('mongodb');
+// const MongoClient = require('mongodb').MongoClient;
+const {MongoClient, ObjectID} = require('mongodb');
 
-const assert = require('assert');
-const url = 'mongodb://localhost:27017';
-const dbName = 'myproject';
-
-(async function () {
-  let client;
-  try {
-    client = await MongoClient.connect(url);
-    console.log("Connected correctly to server");
-
-    const db = client.db(dbName);
-
-    //here in delete we can specify filter action
-    let r = await db.collection('Users')
-
-      .findOneAndUpdate({ //this will update  the name field of record of a given id 
-        _id: new ObjectID('5b9ba7af11451b12fc8e3267'),
-      }, {
-        $set: {
-          name: 'cc'
-        },
-        $inc: {//increment 
-          age: 1
-        }
-      }, {
-        returnOriginal: false //this will true by default , and returns  original data if it is true
-      })
-
-      .then((result) => {
-        console.log(result);
-      })
-
-
-    //console.log(r); //written all data inserted all fields with ids
-  } catch (err) {
-    console.log(err.stack);
+MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
+  if (err) {
+    return console.log('Unable to connect to MongoDB server');
   }
-  client.close();
-})();
+  console.log('Connected to MongoDB server');
+
+  // db.collection('Todos').findOneAndUpdate({
+  //   _id: new ObjectID('57bc4b15b3b6a3801d8c47a2')
+  // }, {
+  //   $set: {
+  //     completed: true
+  //   }
+  // }, {
+  //   returnOriginal: false
+  // }).then((result) => {
+  //   console.log(result);
+  // });
+
+  db.collection('Users').findOneAndUpdate({
+    _id: new ObjectID('57abbcf4fd13a094e481cf2c')
+  }, {
+    $set: {
+      name: 'Andrew'
+    },
+    $inc: {
+      age: 1
+    }
+  }, {
+    returnOriginal: false
+  }).then((result) => {
+    console.log(result);
+  });
+
+  // db.close();
+});
